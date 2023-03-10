@@ -1,0 +1,13 @@
+<!-- create_ego.html -->
+<h1>Create an Ego</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    <br>
+    {% endfor %}
+    <br>
+    <button type="submit">Save</button>
+  </form>
+  
