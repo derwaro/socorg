@@ -20,8 +20,28 @@ class Persona(models.Model):
     chart = models.ForeignKey(Chart, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    is_ego = models.BooleanField()
+    is_ego = models.BooleanField(default=False)
     step = models.IntegerField(default=0)
+    bio_father = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="children_bio_father",
+    )
+    bio_mother = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="children_bio_mother",
+    )
+    non_bio_fathers = models.ManyToManyField(
+        "self", blank=True, related_name="children_non_bio_father"
+    )
+    non_bio_mothers = models.ManyToManyField(
+        "self", blank=True, related_name="children_non_bio_mother"
+    )
 
     class Meta:
         constraints = [
